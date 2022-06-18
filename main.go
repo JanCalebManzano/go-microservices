@@ -1,37 +1,26 @@
 package main
 
 import (
-	"JanCalebManzano/go-microservices/http/handlers"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"os/signal"
-	"time"
 
-	"github.com/gin-gonic/gin"
-	"golang.org/x/net/context"
+	"github.com/JanCalebManzano/go-microservices/http/servers"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	r := gin.New()
-	r.SetTrustedProxies(nil)
-
-	r.Use(gin.Logger())
-	r.Use(gin.Recovery())
-
-	r.GET("/hello", handlers.HandleHello())
-
-	s := http.Server{
-		Addr:         ":8080",
-		Handler:      r,
-		IdleTimeout:  120 * time.Second,
-		ReadTimeout:  1 * time.Second,
-		WriteTimeout: 1 * time.Second,
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
 	}
 
+	s := servers.NewGinServer(os.Getenv("HTTP_PORT"))
+
 	go func() {
-		if err := s.ListenAndServe(); err != nil {
+		if err := s.Start(); err != nil {
 			log.Fatal(err)
 		}
 	}()
@@ -42,6 +31,5 @@ func main() {
 	sig := <-sigCh
 	fmt.Println("Graceful shutdown", sig)
 
-	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
-	s.Shutdown(ctx)
+	s.Shutdown()
 }
