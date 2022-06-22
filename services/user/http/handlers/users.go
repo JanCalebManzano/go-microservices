@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/JanCalebManzano/go-microservices/http/responses"
-	"github.com/JanCalebManzano/go-microservices/models"
+	"github.com/JanCalebManzano/go-microservices/services/user/http/responses"
+	"github.com/JanCalebManzano/go-microservices/services/user/models"
 
 	"github.com/gin-gonic/gin"
 )

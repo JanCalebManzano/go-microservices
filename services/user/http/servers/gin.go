@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/JanCalebManzano/go-microservices/http/handlers"
-	"github.com/JanCalebManzano/go-microservices/http/middlewares"
+	"github.com/JanCalebManzano/go-microservices/services/user/http/handlers"
+	"github.com/JanCalebManzano/go-microservices/services/user/http/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
